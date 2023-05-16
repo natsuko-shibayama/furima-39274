@@ -6,6 +6,7 @@
 | ------------------    | ------ | ------------------------- |
 | email                 | string | null: false, unique: true |
 | encrypted_password    | string | null: false               |
+| nickname              | string | null: false               |
 | first_name            | string | null: false               |
 | last_name             | string | null: false               |
 | first_name_kana       | string | null: false               |
@@ -28,6 +29,7 @@
 ### Association
 
 - belongs_to :item
+- belongs_to :user
 - has_one :address
 
 
@@ -42,7 +44,7 @@
 | condition_id          | integer    | null: false                     |
 | shipping_fee_payer_id | integer    | null: false                     |
 | prefecture_id         | integer    | null: false                     |
-| shipping_days_id      | integer    | null: false                     |
+| shipping_day_id       | integer    | null: false                     |
 | price                 | integer    | null: false                     |
 
 ### Association
@@ -57,7 +59,7 @@
 | order          | references | null: false , foreign_key: true |
 | postal_code    | string     | null: false                     |
 | prefecture_id  | integer    | null: false                     |
-| city           | text       | null: false                     |
+| city           | string     | null: false                     |
 | street_address | string     | null: false                     |
 | building_name  | string     |                                 |
 | phone_number   | string     | null: false                     |
