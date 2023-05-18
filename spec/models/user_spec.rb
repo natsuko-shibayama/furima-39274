@@ -54,6 +54,26 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
 
+      it "英字のみのパスワードでは登録できない" do
+        @user.password = "password"
+        @user.password_confirmation = "password"
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
+      end
+
+      it "数字のみのパスワードでは登録できない" do
+        @user.password = "123456"
+        @user.password_confirmation = "123456"
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
+      end
+
+      it "全角文字を含むパスワードでは登録できない" do
+        @user.password = "パスワード123"
+        @user.password_confirmation = "パスワード123"
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
+
       it "重複したemailが存在する場合は登録できない" do
         @user.save
         another_user = FactoryBot.build(:user, email: @user.email)
@@ -79,13 +99,13 @@ RSpec.describe User, type: :model do
       end
 
       it "お名前(全角)が全角（漢字・ひらがな・カタカナ）でなければ登録できない" do
-        @user.last_name = "Smith"  # 全角の漢字、ひらがな、カタカナ以外の文字を設定
+        @user.last_name = "Smith"
         @user.valid?
         expect(@user.errors.full_messages).to include("Last name is invalid")
       end
 
       it "お名前(全角)が全角（漢字・ひらがな・カタカナ）でなければ登録できない" do
-        @user.first_name = "Smith"  # 全角の漢字、ひらがな、カタカナ以外の文字を設定
+        @user.first_name = "Smith" 
         @user.valid?
         expect(@user.errors.full_messages).to include("First name is invalid")
       end
@@ -119,6 +139,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Date of birth can't be blank")
       end
+      
     end
   end
 end
