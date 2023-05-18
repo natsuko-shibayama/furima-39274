@@ -57,21 +57,21 @@ RSpec.describe User, type: :model do
       it "英字のみのパスワードでは登録できない" do
         @user.password = "password"
         @user.password_confirmation = "password"
-        expect(@user).not_to be_valid
+        @user.valid?
         expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
       end
 
       it "数字のみのパスワードでは登録できない" do
         @user.password = "123456"
         @user.password_confirmation = "123456"
-        expect(@user).not_to be_valid
+        @user.valid?
         expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
       end
 
       it "全角文字を含むパスワードでは登録できない" do
         @user.password = "パスワード123"
         @user.password_confirmation = "パスワード123"
-        expect(@user).not_to be_valid
+        @user.valid?
         expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
       end
 
@@ -79,7 +79,7 @@ RSpec.describe User, type: :model do
         @user.save
         another_user = FactoryBot.build(:user, email: @user.email)
         another_user.valid?
-        expect(another_user.errors.full_messages).to include('Email has already been taken')
+        expect(another_user.errors[:email]).to include('has already been taken')
       end
 
       it "emailは@を含まないと登録できない" do
@@ -87,7 +87,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
-      
+
       it "お名前(全角)の名字が空では登録できない" do
         @user.last_name = ''
         @user.valid?
