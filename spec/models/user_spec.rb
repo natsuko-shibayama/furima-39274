@@ -73,6 +73,7 @@ RSpec.describe User, type: :model do
         @user.password_confirmation = "パスワード123"
         expect(@user).not_to be_valid
         expect(@user.errors[:password]).to include("は半角英数字混合で入力してください")
+      end
 
       it "重複したemailが存在する場合は登録できない" do
         @user.save
@@ -86,6 +87,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
+      
       it "お名前(全角)の名字が空では登録できない" do
         @user.last_name = ''
         @user.valid?
@@ -139,7 +141,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Date of birth can't be blank")
       end
-      
     end
   end
 end
