@@ -37,7 +37,7 @@
 
 | Column                | Type       | Options                         |
 | --------------------- | ---------- | ------------------------------- |
-| user                  | references | null: false , foreign_key: true |
+| user_id               | references | null: false , foreign_key: true |
 | name                  | string     | null: false                     |
 | content               | text       | null: false                     |
 | category_name_id      | integer    | null: false                     |
