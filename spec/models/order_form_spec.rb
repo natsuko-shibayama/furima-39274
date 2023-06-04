@@ -10,6 +10,12 @@ RSpec.describe OrderForm, type: :model do
       it '全ての情報が正しく入力されていれば購入できる' do
         expect(@order_form).to be_valid
       end
+
+      it '建物が空の場合でも購入できる' do
+        @order_form.building_name = ""
+        expect(@order_form).to be_valid
+      end
+
     end
 
     context '商品の購入が正しく行われない場合' do
@@ -72,6 +78,25 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form).to be_invalid
         expect(@order_form.errors[:phone_number]).to include("is invalid. Please enter numbers only")
       end
+
+      it "電話番号が数字でなければ購入できない" do
+        @order_form.phone_number = "test"
+        expect(@order_form).to be_invalid
+        expect(@order_form.errors[:phone_number]).to include("is invalid. Please enter numbers only")
+      end
+
+      it "電話番号が9桁の場合は購入できない" do
+        @order_form.phone_number = "123456789"
+        expect(@order_form).to be_invalid
+        expect(@order_form.errors[:phone_number]).to include("is invalid. Please enter numbers only")
+      end
+
+      it "電話番号が12桁の場合は購入できない" do
+        @order_form.phone_number = "123456789012"
+        expect(@order_form).to be_invalid
+        expect(@order_form.errors[:phone_number]).to include("is invalid. Please enter numbers only")
+      end
+
     end
   end
 end
