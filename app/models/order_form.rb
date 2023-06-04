@@ -1,6 +1,6 @@
 class OrderForm
   include ActiveModel::Model
-  attr_accessor :item_id, :user_id, :postal_code, :prefecture_id, :city, :street_address, :building_name, :phone_number
+  attr_accessor :item_id, :user_id, :postal_code, :prefecture_id, :city, :street_address, :building_name, :phone_number, :token
 
   with_options presence: true do
     validates :item_id
@@ -10,6 +10,7 @@ class OrderForm
     validates :city
     validates :street_address
     validates :phone_number, format: { with: /\A\d{10,11}\z/,message: "is invalid. Please enter numbers only"}
+    validates :token, presence: true
   end
   def save(params,user_id)
     order = Order.create(item_id: params[:item_id].to_i, user_id: user_id)
