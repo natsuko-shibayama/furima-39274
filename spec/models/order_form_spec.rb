@@ -58,7 +58,7 @@ RSpec.describe OrderForm, type: :model do
       end
 
       it '発送元の地域に「---」が選択されている場合登録されない' do
-        @order_form.prefecture_id = nil
+        @order_form.prefecture_id = 0
         @order_form.valid?
         expect(@order_form.errors.full_messages).to include("Prefecture can't be blank")
       end
