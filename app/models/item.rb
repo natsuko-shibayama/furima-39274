@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   validates :name, :content, :price, :image, presence: true
   validates :price, numericality:{only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   validates :category_name_id, :condition_id, :shipping_fee_payer_id, :prefecture_id, :shipping_day_id, 
-  numericality: { other_than: 1, message: "can't be blank"}
+  numericality: { other_than: 1, message: "が未選択です"}
 
   def was_attached?
     self.image.attached?
