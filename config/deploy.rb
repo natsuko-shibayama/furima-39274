@@ -7,6 +7,8 @@ set :application, 'furima-39274'
 # どのリポジトリからアプリをpullするかを指定する
 set :repo_url,  'git@github.com:natsuko-shibayama/furima-39274.git'
 
+set :branch, "main"
+
 # バージョンが変わっても共通で参照するディレクトリを指定
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
